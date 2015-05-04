@@ -10,10 +10,17 @@
 		<header>
 			
 		</header>
-		<input id="subjectInput" type="text" class="subject"/>
-		<input id="markInput" type="text" class="mark"/>
-		<input id="teacherInput" type="text" class="teacher"/>
-		<input type="submit" id="addButton" value="Add"/>
+		<input id="add-menu" type="checkbox" class="add-menu-checkbox">
+		<label for="add-menu" class="add-menu-label" aria-labelledby="input-section">
+			<i class="icon-add"></i>
+		</label>
+		
+		<div class="input-section">
+			<input placeHolder="Subject" id="subjectInput" type="text" class="subject"/>
+			<input placeHolder="Mark" id="markInput" type="text" class="mark"/>
+			<input placeHolder="Teacher" id="teacherInput" type="text" class="teacher"/>
+			<input type="submit" id="addButton" value="Add"/>
+		</div>
 		<div class="wrapper">
 			<section class="list">
 				<ul class="list-head">

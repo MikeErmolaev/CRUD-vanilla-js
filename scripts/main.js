@@ -10,10 +10,57 @@
 		subjectInput = document.querySelector('#subjectInput'),
 		markInput = document.querySelector('#markInput'),
 		teacherInput = document.querySelector('#teacherInput'),
-		idSort = document.querySelector('.list-head li div:first-child');
-		subjectSort = document.querySelector('.list-head li div:nth-child(2)');
-		markSort = document.querySelector('.list-head li div:nth-child(3)');
-		teacherSort = document.querySelector('.list-head li div:nth-child(4)');
+		idSort = document.querySelector('.list-head li div:first-child'),
+		subjectSort = document.querySelector('.list-head li div:nth-child(2)'),
+		markSort = document.querySelector('.list-head li div:nth-child(3)'),
+		teacherSort = document.querySelector('.list-head li div:nth-child(4)'),
+		inputSection = document.querySelector('.input-section'),
+		directionUp = false;
+
+
+	inputSection.onkeypress = function(event) {
+		if (event.keyCode == 13) {
+			addData();
+		}
+	}
+
+	function sortBy(array, criterion, directionUp) {
+
+		array.sort(function(a, b) {
+			if (a[criterion] < b[criterion]) {
+				return directionUp ? -1 : 1;
+			} else if (a[criterion] > b[criterion]) {
+				return directionUp ? 1 : -1;
+			} else {
+				return 0;
+			}
+		});
+	}
+
+	idSort.addEventListener('click', function(e) {
+		directionUp = !directionUp;
+		sortBy(exams, 'id', directionUp);
+		localStorage.setItem('examsDB', exams);
+		render();
+	});
+	subjectSort.addEventListener('click', function(e) {
+		directionUp = !directionUp;
+		sortBy(exams, 'subject', directionUp);
+		localStorage.setItem('examsDB', exams);
+		render();
+	});
+	markSort.addEventListener('click', function(e) {
+		directionUp = !directionUp;
+		sortBy(exams, 'mark', directionUp);
+		localStorage.setItem('examsDB', exams);
+		render();
+	});
+	teacherSort.addEventListener('click', function(e) {
+		directionUp = !directionUp;
+		sortBy(exams, 'teacher', directionUp);
+		localStorage.setItem('examsDB', exams);
+		render();
+	});
 
 	clearButton.addEventListener('click', function(e) {
 		localStorage.setItem('currentID', 1);
@@ -23,18 +70,11 @@
 		render();
 	});
 
-	listHead.addEventListener('click',function(e){
-		var node = e.target;
-
-	});
-
 	addButton.addEventListener('click', function() {
-		addExam(id, subjectInput.value, markInput.value, teacherInput.value);
-		id++;
-		localStorage.setItem('currentID', id);
+		addData();
 	});
 
-	
+
 
 	view.addEventListener('click', function(e) {
 		var node = e.target;
@@ -45,6 +85,45 @@
 			removeExamByIndex(index);
 		}
 	});
+	view.addEventListener('blur', function(e) {
+		var node = e.target;
+
+		if (node.hasAttribute('contenteditable')) {
+			updateData(node);
+		}
+	}, true);
+
+	view.onkeypress = function(e) {
+		if (e.keyCode == 13) {
+			var node = e.target;
+			if (node.hasAttribute('contenteditable')) {
+				updateData(node);
+			}
+			e.target.blur();
+			return false;
+		}
+	}
+
+	function updateData(item) {
+		var index;
+		var className;
+		index = getIndex(item);
+		className = item.getAttribute('class');
+		exams[index][className] = item.innerHTML;
+		localStorage.setItem('examsDB', JSON.stringify(exams));
+	}
+
+	function addData() {
+		if (/^[aA-zZ]*(\s\b[aA-zZ]*\b)?$/.test(subjectInput.value) && /^([0-9]|10)$/.test(markInput.value) && /^[A-z]*\s[A-Z].[A-Z].$/.test(teacherInput.value)) {
+			addExam(id, subjectInput.value, markInput.value, teacherInput.value);
+			id++;
+			localStorage.setItem('currentID', id);
+		} else {
+			subjectInput.value = '';
+			markInput.value = '';
+			teacherInput.value = '';
+		}
+	}
 
 	function render() {
 		view.innerHTML = '';
@@ -59,13 +138,13 @@
 				<p>' + exam.id + '</p>\
 			</div>\
 			<div>\
-				<p contenteditable="true">' + exam.subject + '</p>\
+				<p class="subject" contenteditable="true">' + exam.subject + '</p>\
 			</div>\
 			<div>\
-				<p contenteditable="true">' + exam.mark + '</p>\
+				<p class="mark" contenteditable="true">' + exam.mark + '</p>\
 			</div>\
 			<div>\
-				<p contenteditable="true">' + exam.teacher + '</p>\
+				<p class="teacher" contenteditable="true">' + exam.teacher + '</p>\
 			</div>\
 			<div>\
 				<button class="remove">Remove</button>\
@@ -81,6 +160,10 @@
 		exams.push(exam);
 		localStorage.setItem('examsDB', JSON.stringify(exams));
 		render();
+	}
+
+	function changeExamByIndex(id) {
+
 	}
 
 	function removeExamByIndex(index) {

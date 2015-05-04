@@ -1,3 +1,64 @@
+.icon-add{
+	background-image: -webkit-linear-gradient(top,#2e2e2e,#000);
+	border: 1px solid #000;
+	border-radius: 5px;
+	box-shadow: inset 0 1px 0 0 rgba(255,255,255,.1),inset 0 0 2px 0 rgba(255,255,255,.2);
+	cursor: pointer;
+	display: inline-block;
+	height: 18px;
+	width: 20px;
+	vertical-align: middle;
+	position: relative;
+
+}
+.add-menu-label{
+	transition:transform .3s ease;
+}
+.icon-add:before{
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 9px;
+	width: 3px;
+	height: 14px;
+	background: #ccc;
+	border-radius: 3px;
+}
+.icon-add:hover:before{
+	background: #fff;
+}
+.icon-add:hover:after{
+	background: #fff;
+}
+
+.icon-add:after{
+	content: '';
+	position: absolute;
+	top: 2px;
+	left: 9px;
+	width: 3px;
+	height: 14px;
+	background: #ccc;
+	transform: rotate(90deg);
+	border-radius: 3px;
+}
+
+.add-menu-checkbox{
+	position: absolute;
+	display: none;
+}
+.add-menu-label{
+	position: absolute;
+	top:5px;
+	left: 50%;
+}
+
+
+.wrapper{
+	padding-top: 20px;
+	transition:transform .3s ease;
+}
+
 *{
 	margin: 0;
 	padding: 0;
@@ -29,6 +90,7 @@ ul li div:first-child{
 
 .list-head div{
 	font-size: 30px;
+	-webkit-user-select:none;
 	cursor: pointer;
 }
 
@@ -42,4 +104,21 @@ ul li div{
 	text-align: center;
 	width: 23%;
 	display: inline-block;
+}
+
+.input-section{
+	box-sizing:border-box;
+	transform:translateY(-100%);
+	transition:transform .3s ease;
+}
+
+.add-menu-checkbox:checked~.input-section{
+	transform:translateY(0%);e
+}
+
+.add-menu-checkbox:checked~.add-menu-label{
+	transform:translateY(30px);
+}
+.add-menu-checkbox:checked~.wrapper{
+	transform:translateY(30px);
 }
