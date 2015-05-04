@@ -11,9 +11,6 @@
 	position: relative;
 
 }
-.add-menu-label{
-	transition:transform .3s ease;
-}
 .icon-add:before{
 	content: '';
 	position: absolute;
@@ -47,11 +44,6 @@
 	position: absolute;
 	display: none;
 }
-.add-menu-label{
-	position: absolute;
-	top:5px;
-	left: 50%;
-}
 
 
 .wrapper{
@@ -72,6 +64,9 @@ ul{
 	width: 70%;
 	margin: 0 auto;
 }
+.items li:hover{
+	background: #eee;
+}
 
 .list-head li div p{
 	width: 100%;
@@ -81,6 +76,7 @@ ul{
 ul li{
 	font-size: 0;
 	width: 100%;
+	cursor: pointer;
 }
 
 ul li div:first-child{
@@ -91,7 +87,7 @@ ul li div:first-child{
 .list-head div{
 	font-size: 30px;
 	-webkit-user-select:none;
-	cursor: pointer;
+	
 }
 
 ul li div p{
@@ -113,12 +109,28 @@ ul li div{
 }
 
 .add-menu-checkbox:checked~.input-section{
-	transform:translateY(0%);e
+	transform:translateY(0%);
 }
 
-.add-menu-checkbox:checked~.add-menu-label{
-	transform:translateY(30px);
+.add-menu-checkbox:checked~.label{
+	transform:translateY(20px);
 }
 .add-menu-checkbox:checked~.wrapper{
-	transform:translateY(30px);
+	transform:translateY(20px);
+}
+.error{
+	background: #f21;
+}
+
+.status{
+	text-align: center;
+	border-radius: 5px;
+	background: #eee;
+}
+.label{
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	transform: translateY(0);
+	transition:transform .3s ease;
 }
